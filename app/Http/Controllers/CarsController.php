@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Car;
 
 class CarsController extends Controller
 {
@@ -12,7 +13,10 @@ class CarsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('cars.index');
+        $cars = Car::all();
+        return view('cars.index', [
+            'cars' => $cars
+        ]);
     }
 
     /**
@@ -20,9 +24,8 @@ class CarsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        return view('cars.create');
     }
 
     /**
@@ -31,9 +34,20 @@ class CarsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        // $car = new Car;
+        // $car->name = $request->input('name');
+        // $car->founded = $request->input('founded');
+        // $car->description = $request->input('description');
+        // $car->save();
+
+        $car = Car::create([
+            'name' => $request->input('name'),
+            'founded' => $request->input('founded'),
+            'description' => $request->input('description')
+        ]);
+
+        return redirect('/cars');
     }
 
     /**
@@ -53,9 +67,9 @@ class CarsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit($id) {
+        $car = Car::where('id', $id)->first();
+        return view('cars.edit')->with('car', $car);
     }
 
     /**
@@ -65,9 +79,14 @@ class CarsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id) {
+			$car = Car::where('id', $id)
+				->update([
+					'name' => $request->input('name'),
+					'founded' => $request->input('founded'),
+					'description' => $request->input('description')
+				]);
+			return redirect('/cars');
     }
 
     /**
@@ -76,8 +95,9 @@ class CarsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+      $car = Car::find($id)->first();
+			$car->delete();
+			return redirect('/cars');
     }
 }
