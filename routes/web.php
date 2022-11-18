@@ -16,3 +16,4 @@ use App\Http\Controllers\CarsController;
 
 
 Route::resource('/cars', CarsController::class);
+Route::get('/cars/{id}/delete', [CarsController::class, 'delete']);

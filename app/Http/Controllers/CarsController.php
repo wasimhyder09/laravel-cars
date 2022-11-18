@@ -100,4 +100,9 @@ class CarsController extends Controller
 			$car->delete();
 			return redirect('/cars');
     }
+
+		public function delete($id) {
+			$car = Car::where('id', $id)->firstOrFail();
+			return view('cars.delete')->with('car', $car);
+		}
 }
