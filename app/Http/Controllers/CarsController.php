@@ -56,9 +56,10 @@ class CarsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($id) {
+      $car = Car::find($id);
+
+      return view('cars.show')->with('car', $car);
     }
 
     /**
