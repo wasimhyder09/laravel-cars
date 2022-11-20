@@ -8,6 +8,7 @@
       <a href="/cars">&larr; Back</a>
       <div class="py-10 text-center">
         <div class="m-auto">
+          <img class="w-8/12 mb-8 shadow-xl" src="{{ asset('images/'.$car->image_path) }}" alt="Car image">
           <span class="uppercase text-blue-500 font-bold text-xs italic">
             Founded: {{ $car->founded }}
           </span>

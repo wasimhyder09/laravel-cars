@@ -23,7 +23,7 @@ class CreateValidationRequest extends FormRequest
     public function rules() {
       return [
         'name' => 'required',
-        'fonded' => 'required | integer | min: 0 | max : 2022',
+        'founded' => 'required | integer | min: 0 | max : 2022',
         'description' => 'required'
       ];
     }

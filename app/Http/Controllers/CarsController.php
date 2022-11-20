@@ -36,13 +36,25 @@ class CarsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateValidationRequest $request) {
-      $request->validated();
+    public function store(Request $request) {
+      // $request->validated();
+
+      $this->validate($request, [
+        'name' => 'required',
+        'founded' => 'required|integer|min:0|max:2022',
+        'description' => 'required',
+        'image' => 'required|mimes:jpg,png,jpeg|max:5048'
+      ]);
+
+      $newImageName = time() . '-' . $request->name . '.' . $request->image->extension();
+
+      $request->image->move(public_path('images'), $newImageName);
 
       $car = Car::create([
           'name' => $request->input('name'),
           'founded' => $request->input('founded'),
-          'description' => $request->input('description')
+          'description' => $request->input('description'),
+          'image_path' => $newImageName
       ]);
 
       return redirect('/cars');
@@ -95,7 +107,8 @@ class CarsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-      $car = Car::find($id)->first();
+      $car = Car::find($id);
+      // dd($car);
 			$car->delete();
 			return redirect('/cars');
     }
