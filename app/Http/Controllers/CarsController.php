@@ -35,19 +35,18 @@ class CarsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        // $car = new Car;
-        // $car->name = $request->input('name');
-        // $car->founded = $request->input('founded');
-        // $car->description = $request->input('description');
-        // $car->save();
+      $this->validate($request, [
+        'name' => 'required | unique:cars',
+        'fonded' => 'required | integer | min: 0 | max : 2022',
+        'description' => 'required'
+      ]);
+      $car = Car::create([
+          'name' => $request->input('name'),
+          'founded' => $request->input('founded'),
+          'description' => $request->input('description')
+      ]);
 
-        $car = Car::create([
-            'name' => $request->input('name'),
-            'founded' => $request->input('founded'),
-            'description' => $request->input('description')
-        ]);
-
-        return redirect('/cars');
+      return redirect('/cars');
     }
 
     /**

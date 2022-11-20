@@ -6,6 +6,17 @@
         <h1 class="text-5xl uppercase bold">Create car</h1>
       </div>
     </div>
+    @if ($errors->any())
+      <div class="w-4/8 m-auto text-center">
+        @foreach ($errors->all() as $error)
+          <ul>
+            <li class="text-red-500 list-none">
+              {{ $error }}
+            </li>
+          </ul>
+        @endforeach
+      </div>
+    @endif
     <div class="flex justify-center pt-20">
       <form action="/cars" method="POST">
         @csrf
