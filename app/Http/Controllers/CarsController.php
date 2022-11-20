@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
+use App\Rules\Uppercase;
 
 class CarsController extends Controller
 {
@@ -36,7 +37,7 @@ class CarsController extends Controller
      */
     public function store(Request $request) {
       $this->validate($request, [
-        'name' => 'required | unique:cars',
+        'name' => new Uppercase,
         'fonded' => 'required | integer | min: 0 | max : 2022',
         'description' => 'required'
       ]);
@@ -79,6 +80,11 @@ class CarsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
+      $this->validate($request, [
+        'name' => new Uppercase,
+        'fonded' => 'required | integer | min: 0 | max : 2022',
+        'description' => 'required'
+      ]);
 			$car = Car::where('id', $id)
 				->update([
 					'name' => $request->input('name'),
