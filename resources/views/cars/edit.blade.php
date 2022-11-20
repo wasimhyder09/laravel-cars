@@ -9,6 +9,17 @@
         <a href="/cars" class="border-b-2 pb-2 border-dotted italic text-gray-500">Back &larr;</a>
       </div>
     </div>
+    @if ($errors->any())
+      <div class="w-4/8 m-auto text-center">
+        @foreach ($errors->all() as $error)
+          <ul>
+            <li class="text-red-500 list-none">
+              {{ $error }}
+            </li>
+          </ul>
+        @endforeach
+      </div>
+    @endif
     <div class="flex justify-center pt-20">
       <form action="/cars/{{ $car->id }}" method="POST">
         @csrf
